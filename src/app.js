@@ -23,7 +23,6 @@ app.use('/student', studentRouter);
 app.use('/tutor', tutorRouter);
 app.use('/files', filesRouter);
 app.use('/admin', adminRouter);
-console.log(process.env)
 app.listen(port, () => {
     console.log('Servidor ejecutándose en el puerto:', port);
 }); 
