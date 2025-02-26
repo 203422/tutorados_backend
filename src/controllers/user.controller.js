@@ -19,17 +19,15 @@ export class UserControllers {
         if (!roleName) return res.status(400).json({ message: 'Código o matrícula no valido' })
 
         if (roleName == 'Administrador') {
+
             const adminExists = await AdminModel.verifyAdmin({ roleName });
             if (adminExists) return res.status(401).json({ message: 'Ya existe un administrador' });
 
-            const validAdminCode = await AdminModel.validateCodeAdmin({ code });
+            const admin = await AdminModel.register({ adminData: { name, lastName, email, password, roleName, code } });
 
-            if (validAdminCode) {
-                const admin = await AdminModel.register({ adminData: { name, lastName, email, password, roleName, code } });
-                if (admin) return res.status(200).json(admin);
-            } else {
-                return res.status(400).json({ message: 'Código no valido' })
-            }
+            if (admin) return res.status(200).json(admin);
+
+            return res.status(400).json({ message: 'Código no valido' })
 
         }
 
